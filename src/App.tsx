@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { InitialData } from './initialValues.json';
+import { InitialData } from './initialData.json';
 import styled, { createGlobalStyle } from 'styled-components';
+import produce from 'immer';
 
 // Import th InitialData from an external file and define number of rows and colums on the grid.
 const numRows = InitialData[0].numRows;
@@ -16,6 +17,18 @@ function App() {
     }
     return gridContainer;
   });
+  //Function for changing the state of a cell dead/alive based on current status
+  const deadAliveCellChanger = (
+    currentStatus: number,
+    i: number,
+    j: number
+  ) => {
+    setGrid(
+      produce(grid, (gridMutable: any) => {
+        gridMutable[i][j] = !currentStatus;
+      })
+    );
+  };
 
   console.log(grid);
   return (
@@ -24,8 +37,23 @@ function App() {
       <Title>The Game Of Life</Title>
       <h2>Nav</h2>
       <GridWrapper>
-        {grid.map((row) => row.map((col) => (col ? <Alive /> : <Dead />)))}
+        {grid.map((row, i) =>
+          row.map((col, j) =>
+            col ? (
+              <Alive
+                key={`${i}_${j}`}
+                onClick={() => deadAliveCellChanger(1, i, j)}
+              />
+            ) : (
+              <Dead
+                key={`${i}_${j}`}
+                onClick={() => deadAliveCellChanger(0, i, j)}
+              />
+            )
+          )
+        )}
       </GridWrapper>
+      <h2>Nav</h2>
     </div>
   );
 }
@@ -41,6 +69,12 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 // Elements Styles
+
+const Title = styled.h1`
+  width: 100%;
+  background-color: green;
+`;
+
 const GridWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(${numCols}, 50px);
@@ -51,16 +85,10 @@ const Alive = styled.div`
   background-color: green;
   margin: 1px;
 `;
+
 const Dead = styled.div`
   background-color: grey;
   margin: 1px;
-`;
-
-const Title = styled.h1`
-  width: 100%;
-  background-color: green;
-  display: flex;
-  align-items: center;
 `;
 
 export default App;
