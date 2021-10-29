@@ -1,8 +1,17 @@
 {
-  "InitialData": [
-    {
-      "numRows": 12,
-      "numCols": 10
-    }
-  ]
+  "InitialData": {
+    "numRows": 20,
+    "numCols": 20,
+    "currentGeneration": 0,
+    "neighborsPositions": [
+      [-1, -1],
+      [-1, 0],
+      [-1, 1],
+      [0, -1],
+      [0, 1],
+      [1, -1],
+      [1, 0],
+      [1, 1]
+    ]
+  }
 }
