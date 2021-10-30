@@ -196,15 +196,19 @@ const Dead = styled.div`
   background-color: #c0c0c030;
   margin: 2px;
   transition: 0.2s;
-  &:hover {
-    transition: 0.2s;
-    cursor: pointer;
-    background-color: #cfcfcf;
+  @media (hover: hover) {
+    &:hover {
+      transition: 0.2s;
+      cursor: pointer;
+      background-color: #cfcfcf;
+    }
   }
-  &:active {
-    transition: 0.2s;
-    cursor: pointer;
-    background-color: #cfcfcf;
+  @media (hover: none) {
+    &:active {
+      transition: 0.2s;
+      cursor: pointer;
+      background-color: #cfcfcf;
+    }
   }
 `;
 
@@ -213,15 +217,19 @@ const Alive = styled.div`
   background-color: #ffa600;
   margin: 2px;
   transition: 0.2s;
-  &:hover {
-    transition: 0.2s;
-    cursor: pointer;
-    background-color: #ffc861;
+  @media (hover: hover) {
+    &:hover {
+      transition: 0.2s;
+      cursor: pointer;
+      background-color: #ffc861;
+    }
   }
-  &:active {
-    transition: 0.2s;
-    cursor: pointer;
-    background-color: #ffc861;
+  @media (hover: none) {
+    &:active {
+      transition: 0.2s;
+      cursor: pointer;
+      background-color: #ffc861;
+    }
   }
 `;
 

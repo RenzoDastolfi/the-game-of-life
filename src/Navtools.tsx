@@ -141,17 +141,20 @@ const Buttons = styled.div`
     transition: 0.2s;
     backface-visibility: hidden;
     display: inline-block;
-    &:hover {
-      backface-visibility: hidden;
-      transition: 0.2s;
-      transform: scale(1.05);
-      background-color: #c9c9c9;
+    @media (hover: hover) {
+      &:hover {
+        backface-visibility: hidden;
+        transition: 0.2s;
+        transform: scale(1.05);
+        background-color: #c9c9c9;
+      }
     }
-    &:active {
-      backface-visibility: hidden;
-      transition: 0.2s;
-      transform: scale(1.05);
-      background-color: #c9c9c9;
+    @media (hover: none) {
+      &:active {
+        backface-visibility: hidden;
+        transform: scale(1.05);
+        background-color: #c9c9c9;
+      }
     }
   }
   @media (max-width: 1530px) {
@@ -205,9 +208,17 @@ const SpeedSlider = styled.input`
     background: #ffa600;
     cursor: pointer;
     transition: 0.2s;
-    &:hover {
-      transform: scale(1.2);
-      background: #ffb833;
+    @media (hover: hover) {
+      &:hover {
+        transform: scale(1.2);
+        background: #ffb833;
+      }
+    }
+    @media (hover: none) {
+      &:active {
+        transform: scale(1.2);
+        background: #ffb833;
+      }
     }
   }
 `;
