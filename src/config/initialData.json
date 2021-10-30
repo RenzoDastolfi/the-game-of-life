@@ -1,5 +1,5 @@
 {
-  "InitialData": {
+  "initialData": {
     "numRows": 20,
     "numCols": 20,
     "currentGeneration": 0,
