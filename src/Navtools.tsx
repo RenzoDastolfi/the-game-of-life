@@ -51,7 +51,7 @@ function Navtools({
         </button>
         {/* Next Step Button */}
         <button onClick={() => gameOfLifeLogic()}>Step</button>
-        {/* Set Random Grid Button */}
+        {/* Set Random Step Button */}
         <button
           onClick={() => {
             setGrid(gridCreator('random'));
@@ -141,7 +141,13 @@ const Buttons = styled.div`
     transition: 0.2s;
     backface-visibility: hidden;
     display: inline-block;
-    &hover {
+    &:hover {
+      backface-visibility: hidden;
+      transition: 0.2s;
+      transform: scale(1.05);
+      background-color: #c9c9c9;
+    }
+    &:active {
       backface-visibility: hidden;
       transition: 0.2s;
       transform: scale(1.05);

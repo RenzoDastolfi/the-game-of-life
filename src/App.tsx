@@ -201,6 +201,11 @@ const Dead = styled.div`
     cursor: pointer;
     background-color: #cfcfcf;
   }
+  &:active {
+    transition: 0.2s;
+    cursor: pointer;
+    background-color: #cfcfcf;
+  }
 `;
 
 const Alive = styled.div`
@@ -209,6 +214,11 @@ const Alive = styled.div`
   margin: 2px;
   transition: 0.2s;
   &:hover {
+    transition: 0.2s;
+    cursor: pointer;
+    background-color: #ffc861;
+  }
+  &:active {
     transition: 0.2s;
     cursor: pointer;
     background-color: #ffc861;
