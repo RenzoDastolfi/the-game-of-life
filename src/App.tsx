@@ -184,8 +184,8 @@ const GridWrapper = styled.div`
 const Grid = styled.div`
   display: grid;
   @media (max-width: 1530px) {
-    grid-template-columns: repeat(${numCols}, 50px);
-    grid-template-rows: repeat(${numRows}, 50px);
+    grid-template-columns: repeat(${numCols}, 40px);
+    grid-template-rows: repeat(${numRows}, 40px);
   }
   grid-template-columns: repeat(${numCols}, 30px);
   grid-template-rows: repeat(${numRows}, 30px);
