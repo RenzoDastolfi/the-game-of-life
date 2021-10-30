@@ -1,13 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
 import { initialData } from './config/initialData.json';
-import styled from 'styled-components';
-import produce from 'immer';
-import Navtools from './Navtools';
-import './styles/globalStyles.css';
+import styled from 'styled-components'; // Styled Components Documentation --> https://styled-components.com/docs
+import produce from 'immer'; // Immer Documentation --> https://immerjs.github.io/immer/
+import Navtools from './Navtools'; // Bottom Navbar Component
+import './styles/globalStyles.css'; // Vanilla CSS (just for Global Styles and Font imports)
 
 // Import the InitialData from an external file to define number of rows and colums on the grid and the current generation.
-// **neighborsPositions: for practical purposes I've added this utility array on the initialData JSON file.
-const { numRows, numCols, currentGeneration, neighborsPositions } = initialData;
+const { numRows, numCols, currentGeneration, neighborsPositions } = initialData; // **neighborsPositions: for practical purposes I've added this utility array on the initialData JSON file.
 
 function App() {
   // *** UTILITY FUNCTIONS ***
@@ -44,23 +43,27 @@ function App() {
 
   const [currentGen, setCurrentGen] = useState<number>(currentGeneration);
 
-  // *** GAME'S LOGIC (useCallback) ***
-  // ---> Conways Game Of Life Logic: https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
+  // *** GAME'S LOGIC (useCallback) *** ---> Conways Game Of Life Logic: https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
+
   const gameOfLifeLogic = useCallback(() => {
     setGrid((currentGrid: any[]) => {
       return produce(currentGrid, (gridMutable: any[]) => {
+        // Iterates the current state of grid and computes the correct values for updating the copied mutable version of it.
         grid.map((row: [], i: number) =>
           row.map((cell: boolean, j: number) => {
             let neighbors = 0;
+            // Evaluates the live/dead status of each neighbor position of the current selected cell
             neighborsPositions.forEach(([a, b]) => {
               let newI = i + a;
               let newJ = j + b;
 
+              // Verifies if the current neighbor position it's not out of bounds
               if (newI >= 0 && newI < numRows && newJ >= 0 && newJ < numCols) {
                 if (currentGrid[newI][newJ]) neighbors++;
               }
             });
 
+            // Game of life Rules Logic
             if ((neighbors < 2 || neighbors > 3) && currentGrid[i][j]) {
               gridMutable[i][j] = !gridMutable[i][j];
             } else if (neighbors === 3 && !currentGrid[i][j]) {
@@ -75,10 +78,10 @@ function App() {
   }, [currentGen, grid]);
 
   // *** AUTOPLAY (useEffect): Autoplay State, Play Speed State and Effects ***
-  const [playing, setPlaying] = useState<boolean>(false); // Game is playing? (Autoplay Status) - State declaration
-  const [playSpeed, setPlaySpeed] = useState<number>(1000); // Game Speed - State declaration
+  const [isPlaying, setIsPlaying] = useState<boolean>(false); // Game is Playing? (Autoplay Status)
+  const [playSpeed, setPlaySpeed] = useState<number>(1000);
   useEffect(() => {
-    if (playing) {
+    if (isPlaying) {
       const timer = window.setInterval(() => {
         gameOfLifeLogic();
       }, playSpeed);
@@ -86,10 +89,10 @@ function App() {
         window.clearInterval(timer);
       };
     }
-  }, [gameOfLifeLogic, playing, playSpeed]);
+  }, [gameOfLifeLogic, isPlaying, playSpeed]);
 
   return (
-    <div className="App">
+    <div>
       <Header>
         <h1>Conway's Game Of Life</h1>
       </Header>
@@ -119,7 +122,7 @@ function App() {
         gridCreator={gridCreator}
         currentGen={currentGen}
         setCurrentGen={setCurrentGen}
-        setPlaying={setPlaying}
+        setPlaying={setIsPlaying}
         gameOfLifeLogic={gameOfLifeLogic}
         speed={playSpeed}
         setSpeed={setPlaySpeed}
@@ -137,7 +140,7 @@ const AppBackground = styled.div`
   height: 100vh;
   top: 0;
   left: 0;
-  z-index: -2;
+  z-index: -1;
   background-color: #f7f4e6;
   opacity: 0.1;
   background-image: repeating-radial-gradient(
@@ -157,25 +160,21 @@ const Header = styled.div`
   justify-content: center;
   height: 60px;
   width: 30%;
-  min-width: 300px;
-  z-index: 2;
+  min-width: 320px;
+  z-index: 1;
   border-bottom-right-radius: 35px;
   color: #fff;
   background-color: #ffa600;
   box-shadow: 0px 0px 30px 10px rgba(0, 0, 0, 0.05);
   h1 {
-    font-weight: 500;
-    font-size: 1em;
-    z-index: 2;
+    font-weight: 800;
+    font-size: 1.5em;
   }
 `;
 
 const GridWrapper = styled.div`
-  position: absolute;
   overflow: hidden;
-  top: 0;
-  left: 0;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -185,8 +184,8 @@ const GridWrapper = styled.div`
 const Grid = styled.div`
   display: grid;
   @media (max-width: 1530px) {
-    grid-template-columns: repeat(${numCols}, 60px);
-    grid-template-rows: repeat(${numRows}, 60px);
+    grid-template-columns: repeat(${numCols}, 50px);
+    grid-template-rows: repeat(${numRows}, 50px);
   }
   grid-template-columns: repeat(${numCols}, 30px);
   grid-template-rows: repeat(${numRows}, 30px);
